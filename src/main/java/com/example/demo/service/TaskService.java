@@ -10,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +38,6 @@ public class TaskService {
         List<Task> tasks = taskRepository.findAll(Sort.by(field));
         return convertToDTOList(tasks);
     }
-
 
     public TaskDTO convertToDTO (Task task){
         return new TaskDTO(task.getId(), task.getTitle(), task.isDone(), task.getPriority() );
