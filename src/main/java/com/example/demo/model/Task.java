@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +16,10 @@ public class Task {
     private LocalDateTime createdAt;
     private String createdBy;
     private String priority;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // Конструктор
     public Task(String title, boolean done, String createdBy, String priority) {
@@ -76,5 +77,13 @@ public class Task {
 
     public String getPriority(){
         return priority;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser(){
+        return user;
     }
 }

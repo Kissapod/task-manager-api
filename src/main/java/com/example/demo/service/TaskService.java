@@ -3,7 +3,9 @@ package com.example.demo.service;
 import com.example.demo.exception.TaskNotFoundException;
 import com.example.demo.model.Task;
 import com.example.demo.model.TaskDTO;
+import com.example.demo.model.User;
 import com.example.demo.repository.TaskRepository;
+import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,9 @@ public class TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // Получить все задачи
     public List<TaskDTO> getAllTasks(int page, int size) {
@@ -60,6 +65,18 @@ public class TaskService {
     // Добавить новую задачу
     public void addTask(Task task) {
         System.out.println("SAVING: " + task.getTitle());
+
+        taskRepository.save(task);
+    }
+
+    public void  addTaskForUser(Integer userId, Task task){
+        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("User not found"));
+
+        System.out.println("USER ID = " + user.getId());
+
+        task.setUser(user);
+
+        System.out.println("TASK USER ID = " + task.getUser().getId());
 
         taskRepository.save(task);
     }

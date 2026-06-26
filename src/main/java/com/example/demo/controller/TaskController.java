@@ -91,4 +91,12 @@ public class TaskController {
 
         return ResponseEntity.ok("Task Deleted");
     }
+
+    @PostMapping("/user/{userId}")
+    public void addTaskForUser(
+            @PathVariable Integer userId,
+            @RequestBody Task task) {
+        taskService.addTaskForUser(userId, task);
+    }
+
 }
