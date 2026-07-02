@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Task;
+import com.example.demo.model.TaskDTO;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +24,10 @@ public class UserController {
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/{id}/tasks")
+    public List<TaskDTO> getUserTasks(@PathVariable Integer id){
+        return userService.getTasksByUser(id);
     }
 }

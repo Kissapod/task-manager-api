@@ -1,5 +1,6 @@
 package com.example.demo.exception;
 
+import org.aspectj.weaver.ast.Not;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,9 +23,9 @@ public class GlobalExceptionHandler{
         return errors;
     }
 
-    @ExceptionHandler(TaskNotFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleNotFound(TaskNotFoundException ex) {
+    public Map<String, String> handleNotFound(NotFoundException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return error;

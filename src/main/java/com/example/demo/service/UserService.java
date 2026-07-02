@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.model.Task;
+import com.example.demo.model.TaskDTO;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,25 @@ public class UserService {
     }
 
     public User getUserById(Integer id){
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found: " + id));
+    }
+
+    public List<TaskDTO> getTasksByUser(Integer userId) {
+        User user = getUserById(userId);
+
+        if (user == null) {
+            return List.of();
+        }
+
+        List<Task> tasks = user.getTasks();
+
+        return tasks.stream()
+                .map(task -> new TaskDTO(
+                        task.getId(),
+                        task.getTitle(),
+                        task.isDone(),
+                        task.getPriority()
+                ))
+                .toList();
     }
 }
