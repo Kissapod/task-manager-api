@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+
 public class LoginRequest {
 
     private String username;
